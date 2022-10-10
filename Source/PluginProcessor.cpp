@@ -183,6 +183,37 @@ void _3bandEQAudioProcessor::setStateInformation (const void* data, int sizeInBy
     // whose contents will have been created by the getStateInformation() call.
 }
 
+juce::AudioProcessorValueTreeState::ParameterLayout
+    _3bandEQAudioProcessor::createParameterLayout() 
+{
+    juce::AudioProcessorValueTreeState::ParameterLayout layout;
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>( "LowCut freq", 
+                                                            "LowCut freq", 
+                                                            juce::NormalisableRange<float>(20.f, 20000.f, 1.f, 1.f), 
+                                                            20.f));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>( "HighCut freq", 
+                                                            "HighCut freq", 
+                                                            juce::NormalisableRange<float>(20.f, 20000.f, 1.f, 1.f), 
+                                                            20000.f));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>( "Peak freq",
+                                                            "Peak freq",
+                                                            juce::NormalisableRange<float>(20.f, 20000.f, 1.f, 1.f),
+                                                            750.f));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>( "Peak gain",
+                                                            "Peak gain",
+                                                            juce::NormalisableRange<float>(-24.f, 24.f, 0.5f, 1.f),
+                                                            0.0f));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>( "Peak quality",
+                                                            "Peak quality",
+                                                            juce::NormalisableRange<float>(0.1f, 10.f, 0.05f, 1.f),
+                                                            1.f));
+}
+
 //==============================================================================
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
